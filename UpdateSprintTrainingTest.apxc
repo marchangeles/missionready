@@ -1,0 +1,40 @@
+/**
+ * @description Apex test class for UpdateSprintTraining
+ */
+
+@isTest
+private class UpdateSprintTrainingTest {
+    @isTest static void updateStudentsTest(){
+        //Test data setup
+        
+        Contact con = new Contact();
+        con.FirstName = 'Bette';
+        con.LastName = 'Porter';
+        con.Prior_Qualification__c = 'Below Tertiary';
+        con.Enrolment_Progression__c = 'Extra';
+        insert con;
+        
+        Contact con2 = new Contact();
+        con2.FirstName = 'Alice';
+        con2.LastName = 'Pieszecki';
+        con2.Prior_Qualification__c = 'Below Tertiary';
+        con2.Enrolment_Progression__c = 'Extra';
+        insert con2;
+        
+        Contact con3 = new Contact();
+        con3.FirstName = 'Shane';
+        con3.LastName = 'McCutcheon';
+        con3.Prior_Qualification__c = 'Below Tertiary';
+        con3.Enrolment_Progression__c = 'Extra';
+        insert con3;
+       
+        Test.startTest();
+        UpdateSprintTraining.updateStudents();
+        Test.stopTest();
+        
+        System.assertEquals(true, [SELECT COUNT() FROM Contact WHERE Enrolment_Progression__c='Advanced' AND Prior_Qualification__c='Tertiary Post-Graduate']==1, 'Expecting 1 record'); 
+        System.assertEquals(true, [SELECT COUNT() FROM Contact WHERE Enrolment_Progression__c='Ultimate' AND Prior_Qualification__c='Tertiary Graduate']==1, 'Expecting 1 record');
+        System.assertEquals(true, [SELECT COUNT() FROM Contact WHERE Enrolment_Progression__c='Extra' AND Prior_Qualification__c='Below Tertiary']==1, 'Expecting 1 record');
+    }
+
+}
