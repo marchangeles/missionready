@@ -1,0 +1,25 @@
+/**
+ * @description Apex test class for ContactUpdateTrigger
+ */
+
+@isTest
+private class ContactUpdateTriggerTest {
+    @isTest static void TestInsertContact(){
+              
+        //Test Data setup
+      	
+      	Contact con = new Contact();
+        con.FirstName = 'Jenny';
+        con.LastName = 'Schecter';
+        con.Prior_Qualification__c = 'Below Tertiary';
+        con.Enrolment_Progression__c = 'Extra';
+           
+        Test.startTest();
+        insert con;
+        Test.stopTest();
+        
+        System.assertEquals(true, [SELECT COUNT() FROM Enrolment__c WHERE Student__c = :con.Id]==1, 'Expecting 1 Enrolment record.');
+        
+    }
+
+}
