@@ -1,0 +1,44 @@
+/**
+ * @description Apex class to randomise Prior Qualification and update Enrolment Progression 
+ */
+ 
+public class UpdateSprintTraining {
+    
+    public static List<Contact> updateStudents(){
+        
+    //get records
+  	List <Contact> studentList= [SELECT Id, Prior_Qualification__c, Enrolment_Progression__c FROM Contact ];
+  
+    //random assignment of prior qualification
+    List<String> priorQualification = new List<String>{'Below Tertiary', 'Tertiary Graduate', 'Tertiary Post-Graduate'};
+        
+    List<Contact> studentsToBeUpdated = new List<Contact>();
+  	
+    Integer x=0;
+    
+    for(Contact con : studentList) {
+
+        if(x > 2){
+            x=0;
+        }
+        
+        con.Prior_Qualification__c = priorQualification[x];
+        
+        if(priorQualification[x] == 'Below Tertiary'){
+            con.Enrolment_Progression__c = 'Extra';
+        }else if(priorQualification[x] == 'Tertiary Graduate'){
+            con.Enrolment_Progression__c = 'Ultimate';
+        }else{
+            con.Enrolment_Progression__c = 'Advanced';
+        }
+        
+        x++; /*x=(x+1) (increment)*/
+        
+        studentsToBeUpdated.add(con);
+        
+    }  
+        update studentsToBeUpdated;
+        return studentsToBeUpdated;
+    }
+
+}
