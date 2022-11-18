@@ -1,0 +1,18 @@
+/**
+ * @description Apex trigger to automatically create an enrolment record 
+ */
+trigger ContactUpdateTrigger on Contact (before insert, before update, after insert, after update) {
+
+    for(Contact stu:Trigger.new){
+        If(Trigger.isAfter){
+            If(Trigger.isInsert){
+                Enrolment__c enrolment = new Enrolment__c();
+                enrolment.Course__c = 'a005h00000eV5HIAA0';
+                enrolment.Student__c = stu.Id;
+                
+                insert enrolment;
+            }
+        }
+       
+    }
+}
